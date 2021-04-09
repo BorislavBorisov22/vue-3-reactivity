@@ -1,1 +1,1 @@
-# Repository for the `Vue 3 Reactivity` course on vuemastery.com
+# Repository for the `Vue 3 Reactivity` course on Vuemaster
