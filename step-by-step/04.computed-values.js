@@ -1,7 +1,7 @@
 function reactivity() {
   const targetMap = new WeakMap();
   let activeEffect = null;
-  let activeSetter = false;
+  let skipTrack = false;
 
   function effect(eff) {
     activeEffect = eff;
@@ -10,7 +10,7 @@ function reactivity() {
   }
 
   function track(target, key) {
-    if (!activeEffect) {
+    if (skipTrack || !activeEffect) {
       return;
     }
 
@@ -27,7 +27,13 @@ function reactivity() {
     dep.add(activeEffect);
   }
 
-  function triggerEffects(target, key) {
+  function runEffects(dep) {
+    skipTrack = true;
+    dep.forEach(eff => eff());
+    skipTrack = false;
+  }
+
+  function trigger(target, key) {
     const depsMap = targetMap.get(target);
     if (!depsMap) {
       return;
@@ -38,15 +44,7 @@ function reactivity() {
       return;
     }
 
-    dep.forEach(eff => {
-      eff();
-    });
-  }
-
-  function trigger(target, key) {
-    // activeSetter = true;
-    triggerEffects(target, key);
-    // activeSetter = false;
+    runEffects(dep);
   }
 
   function reactive(target) {
@@ -90,21 +88,21 @@ function reactivity() {
   }
 
   function computed(getter) {
-    let computedValue = ref(null);
+    let result = ref(null);
     effect(() => {
-      computedValue.value = getter();
+      result.value = getter();
     });
 
-    return computedValue;
+    return result;
   }
 
-  return { effect, reactive, ref, computed, targetMap, };
+  return { effect, reactive, ref, computed, };
 }
 
-const { effect, reactive, ref, computed, targetMap } = reactivity();
+const { effect, reactive, ref, computed } = reactivity();
+
 
 const product = reactive({ price: 10, quantity: 2 });
-
 const salePrice = computed(() => product.price * 0.9);
 const total = computed(() =>  salePrice.value * product.quantity);
 const totalTotal = computed(() => total.value + salePrice.value);

@@ -1,0 +1,9 @@
+{
+  "name": "vue-3-reactivity-course",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/BorislavBorisov22/vue-3-reactivity-course.git",
+  "author": "BorislavBorisov22 <borislavborisov199@gmail.com>",
+  "license": "MIT",
+  "type": "module"
+}

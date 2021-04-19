@@ -39,9 +39,10 @@ function trigger(object, key) {
   dep.forEach(eff => eff());
 }
 
-// track(product, 'price', effect);
-// product.price = 102;
-// trigger(product, 'price', effect);
-// product.quantity = 55;
-// trigger(product, 'price', effect);
-// console.log(total);
+track(product, 'price', effect);
+product.price = 102;
+trigger(product, 'price', effect);
+
+product.quantity = 55;
+trigger(product, 'price', effect);
+console.log(total);
