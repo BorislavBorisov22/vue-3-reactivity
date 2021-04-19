@@ -101,7 +101,7 @@ function reactivity() {
   return { effect, reactive, ref, computed, targetMap, };
 }
 
-const { effect, reactive, ref } = reactivity();
+const { effect, reactive, ref, computed, targetMap } = reactivity();
 
 const product = reactive({ price: 10, quantity: 2 });
 
@@ -118,3 +118,12 @@ effect(() => {
 product.price = 20;
 product.quantity = 3;
 console.log(salePrice.value, total);
+
+const salePrice = computed(() => console.log('computed salePrice') || product.price * 0.9);
+const total = computed(() =>  console.log('computed total') || salePrice.value * product.quantity);
+
+const totalTotal = computed(() => console.log('computed total total') || total.value + salePrice.value);
+// console.log('----------------');
+product.price = 20;
+
+
