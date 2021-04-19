@@ -1,1 +1,1 @@
-# Repository for the `Vue 3 Reactivity` course on vuemastery
+# Some sample implementation of vue 3 reactivity system based on the course on vuemaster + a few tweaks of mine
